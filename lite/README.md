@@ -19,7 +19,9 @@ This is a light version of "Lab4: filesystem image forensics".
 ## Prerequisites 
 **Required environment** 
 
-Fiddling with a whole filesystem (and disk images) requires the root priviledge. So do this lab either on your Linux box which you have root; or do it on the server (e.g. granger1), inside a QEMU emulator. 
+Fiddling with a whole filesystem (and disk images) requires the root privilege. So do this lab either on your Linux box which you have root; or do it on the server (e.g. granger1), inside a QEMU emulator. The problem with QEMU: you will need a system image with all the utilities, e.g. dumpe2fs, etc. Can be built with buildroot which requires some exploration.
+
+Windows users: this experiment can be completely done on Windows 10. These [instructions](./wsl.md) may help (credits: Andrew Jackman). 
 
 **The tools we will use** 
 ls: show directory content

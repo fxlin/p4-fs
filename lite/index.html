@@ -710,7 +710,7 @@
               
                 
                 
-                <h1 id="p4-lite-filesystem-inspection">p4 Lite: Filesystem inspection</h1>
+                <h1 id="p4-lite-filesystem-inspection">p4 lite: Filesystem inspection</h1>
 <p>In this lab, we will inspect filesystem images. We will reason about how filedata and metadata are stored and maintained. </p>
 <p>This is a light version of "Lab4: filesystem image forensics". </p>
 <h2 id="objectives">Objectives</h2>
@@ -726,16 +726,25 @@
 </ul>
 <h2 id="prerequisites">Prerequisites</h2>
 <p><strong>Required environment</strong> </p>
-<p>Fiddling with a whole filesystem (and disk images) requires the root privilege. So do this lab either on your Linux box which you have root; or do it on the server (e.g. granger1), inside a QEMU emulator. The problem with QEMU: you will need a system image with all the utilities, e.g. dumpe2fs, etc. Can be built with buildroot which requires some exploration.</p>
-<p>Windows users: this experiment can be completely done on Windows 10. These <a href="../wsl/">instructions</a> may help (credits: Andrew Jackman). </p>
-<p><strong>The tools we will use</strong> 
-ls: show directory content
-dd: read/write raw content of a file (or a disk partition)
-mkfs.ext2: create a new ext2 filesystem
-debugfs: ext filesystem debugger 
-stat: get file status
-dumpe2fs: dump ext filesystem info
-xxd, hexdump: display binary data</p>
+<p>Fiddling with a whole filesystem (and disk images) requires the root privilege. </p>
+<ul>
+<li>
+<p>Linux/Mac users: do this lab either on your local box which you have root. Or do it on the server, inside a QEMU emulator. The problem with QEMU: you will need a system image with all the utilities, e.g. dumpe2fs, etc. Can be built with buildroot which requires some exploration.</p>
+</li>
+<li>
+<p>Windows users: do this on WSL. These <a href="../wsl/">instructions</a> may help (credits: Andrew Jackman). </p>
+</li>
+</ul>
+<p><strong>The tools we will use</strong> </p>
+<ul>
+<li>ls: show directory content</li>
+<li>dd: read/write raw content of a file (or a disk partition)</li>
+<li>mkfs.ext2: create a new ext2 filesystem</li>
+<li>debugfs: ext filesystem debugger </li>
+<li>stat: get file status</li>
+<li>dumpe2fs: dump ext filesystem info</li>
+<li>xxd, hexdump: display binary data</li>
+</ul>
 <h2 id="step-1-grab-the-disk-image-mount-basic-inspection">Step 1. Grab the disk image, mount, &amp; basic inspection</h2>
 <p>The image file is a byte-to-byte dump of a small disk. The disk size is 2MB. </p>
 <pre><code># grab the file from this git repo, and unzip it 

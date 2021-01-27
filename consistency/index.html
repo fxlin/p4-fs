@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>exp2 - p4-fs</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">p4-fs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../interpretation/" class="nav-link">exp1</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">exp2</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../lite/" class="nav-link">lite</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../interpretation/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../lite/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#file-system-consistency-analysis" class="nav-link">File System Consistency Analysis</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#introduction" class="nav-link">INTRODUCTION:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#relation-to-reading-and-lectures" class="nav-link">RELATION TO READING AND LECTURES:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#project-objectives" class="nav-link">PROJECT OBJECTIVES:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#deliverables" class="nav-link">DELIVERABLES:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#project-description" class="nav-link">PROJECT DESCRIPTION:</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#block-consistency-audits" class="nav-link">Block Consistency Audits</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#i-node-allocation-audits" class="nav-link">I-node Allocation Audits</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#directory-consistency-audits" class="nav-link">Directory Consistency Audits</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#note" class="nav-link">NOTE</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#sample-damaged-file-system-summaries-and-output" class="nav-link">SAMPLE DAMAGED FILE SYSTEM SUMMARIES AND OUTPUT</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#summary-of-exit-codes" class="nav-link">SUMMARY OF EXIT CODES:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#submission" class="nav-link">SUBMISSION:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="file-system-consistency-analysis">File System Consistency Analysis</h1>
+<h2 id="introduction">INTRODUCTION:</h2>
+<p>A file system is an example of a large aggregation of complex and highly inter-related data structures. Such systems are often at risk for corruption, most commonly resulting from incomplete execution of what should have been all-or-none updates. Unless we can so cleverly design our data structures and algorithms as to render such errors impossible, it is usually necessary to articulate consistency assertions and develop a utility to audit those systems for consistency, and (where possible) repair any detected anomalies. </p>
+<p>In part A of this project we wrote a program to examine on-disk data structures and summarize their contents. In this second part, we will analyze those summaries to detect errors and inconsistencies.</p>
+<p>All previous projects have been implemented in C, which exposes the underlying system calls and is well suited for low level operations on well-defined data structures. This project involves trivial text processing (to read .csv input) and the assembly and processing of an internal state model. While this can certainly be done in C, you may find it easier to do in a higher level language (e.g., Python). You are free implement this project in any language that is supported on the departmental servers (where we will do the testing).</p>
+<h2 id="relation-to-reading-and-lectures">RELATION TO READING AND LECTURES:</h2>
+<p>This project more deeply explores the filesystem structures described in Arpaci chapter 39.
+The images we will be working with are EXT2 file systems, as described in sections 40.2-40.5.
+This project goes much deeper than the introductory integrity discussion in sections 42.1-2.</p>
+<h2 id="project-objectives">PROJECT OBJECTIVES:</h2>
+<ul>
+<li>Primary: reinforce the basic file system concepts of directory objects, file objects, and free space.</li>
+<li>Primary: reinforce the implementation descriptions provided in the text and lectures.</li>
+<li>Primary: gain experience examining, interpreting and processing information in complex binary data structures.</li>
+<li>Primary: reinforce the notions of consistency and integrity and apply them to a concrete and non-trivial problem.</li>
+</ul>
+<h2 id="deliverables">DELIVERABLES:</h2>
+<p>A single tarball (<code>.tar.gz</code>) containing:</p>
+<ul>
+<li>(at least) one source module that builds/executes cleanly with no errors or warnings.</li>
+<li>A Makefile to build and run the deliverable program. The higher level targets should be:</li>
+<li>default ... build your program to produce an executable named <code>lab3b</code></li>
+<li><strong>dist</strong> ... create the deliverable tarball</li>
+<li><strong>clean</strong> ... delete all programs and output generated by the <code>Makefile</code>, and return the directory to its freshly un-tar-ed state.</li>
+<li>a <code>README</code> text file containing descriptions of each of the included files and any other information about your submission that you would like to bring to our attention (e.g., research, limitations, features, testing methodology).</li>
+<li>NOTE: do not create or edit your <code>README</code> file on a Windows system, as the gratuitious carriage-returns may cause processing errors in the auto-grading scripts.</li>
+</ul>
+<h2 id="project-description">PROJECT DESCRIPTION:</h2>
+<p>Write a program to analyze a file system summary (a <code>.csv</code> file in the same format produced for the previous file system project) and report on all discovered inconsistencies. Detected inconsistencies should be reported to standard out. Execution errors (e.g., invalid arguments or unable to open required files) should be reported to standard error.</p>
+<p>Your executable should be called <code>lab3b</code> and accept a single, required, command line argument, the name of the file to be analyzed. If your language does not require pre-compilation (e.g., Python) create a default rule in your <code>Makefile</code> that merely creates a <code>lab3b</code> link, or prints a success message. If your language does not allow a program to have such a name, include a shell script (named <code>lab3b</code>) that will run your program.</p>
+<!--- the following may be needed later --->
+
+<p>The results grading for this project will be entirely automated, and messages produced in an incorrect format will receive no points. We are providing a <a href="http://web.cs.ucla.edu/classes/spring18/cs111/projects/P3B_check.sh">sanity check script</a> that will do a simple validation of your package, and confirm correct output for a two-digit number of basic errors. For a simple clean summary, you can use the <a href="http://web.cs.ucla.edu/classes/spring18/cs111/projects/trivial.csv">correct output sample </a>we provided for the previous project. If you want a set of corrupted summaries to test with, you can pull down copies of the summaries (with names like <code>P3B-test_1.csv</code>) and corresponding correct output (with names like <code>P3B-test_1.err</code>) used by the sanity check script.</p>
+<p>Part of your score will be based on your ability to correctly recognize and report on the problems in the supplied file system summaries, but your program will also be tested on several other file systems with a wider range of anomalies. You can lose points for mis-reporting errors, failing to report errors, or for reporting errors that are not present.</p>
+<p>This is a summary of the errors your program should check for, and a sample error message for each:</p>
+<h3 id="block-consistency-audits">Block Consistency Audits</h3>
+<p>Every block pointer in an I-node or indirect block should be valid (a legal data block, within the file system) or zero. Examine every single block pointer in every single I-node, direct block, indirect block, double-indirect block, and triple indirect block to ascertain that this is true. Look at all block pointers in the I-node, not merely those within the indicated file size. If any block pointer is not valid (a legal data block within the file system), an error message like one of the following (depending on precisely the nature of the incorrect pointer that is found) should be generated to stdout:</p>
+<pre><code>    INVALID BLOCK 101 IN INODE 13 AT OFFSET 0
+    INVALID INDIRECT BLOCK 101 IN INODE 13 AT OFFSET 12
+    INVALID DOUBLE INDIRECT BLOCK 101 IN INODE 13 AT OFFSET 268
+    INVALID TRIPLE INDIRECT BLOCK 101 IN INODE 13 AT OFFSET 65804
+    RESERVED INDIRECT BLOCK 3 IN INODE 13 AT OFFSET 12
+    RESERVED DOUBLE INDIRECT BLOCK 3 IN INODE 13 AT OFFSET 268
+    RESERVED TRIPLE INDIRECT BLOCK 3 IN INODE 13 AT OFFSET 65804
+    RESERVED BLOCK 3 IN INODE 13 AT OFFSET 0
+</code></pre>
+<p>An <code>INVALID</code> block is one whose number is less than zero or greater than the highest block in the file system.
+A <code>RESERVED</code> block is one that could not legally be allocated to any file because it should be reserved for file system metadata (e.g., superblock, cylinder group summary, free block list, ...).
+The logical <code>OFFSET</code> values are as described for the previous project.</p>
+<p>Note that the reported offsets should be block numbers (byte offsets divided by 1024). The offset associated with an indirect blocks should be that associated with the first data block it points to (as in the previous project).</p>
+<p>Every legal data block (every block between the end of the I-nodes and the start of the next group) should appear on on the free block list, or be allocated to exactly one file. Examine the free list to determine whether or not this is the case. If a block is not referenced by any file and is not on the free list, a message like the following should be generated to stdout:</p>
+<pre><code>    UNREFERENCED BLOCK 37
+</code></pre>
+<p>A block that is allocated to some file might also appear on the free list. In this case a message like the following should be generated to stdout:</p>
+<pre><code>    ALLOCATED BLOCK 8 ON FREELIST
+</code></pre>
+<p>If a legal block is referenced by multiple files (or even multiple times in a single file), messages like the following (depending on precisely where the references are) should be generated to stdout for each reference to that block:</p>
+<pre><code>    DUPLICATE BLOCK 8 IN INODE 13 AT OFFSET 0
+    DUPLICATE INDIRECT BLOCK 8 IN INODE 13 AT OFFSET 12
+    DUPLICATE DOUBLE INDIRECT BLOCK 8 IN INODE 13 AT OFFSET 268
+    DUPLICATE TRIPLE INDIRECT BLOCK 8 IN INODE 13 AT OFFSET 65804
+</code></pre>
+<p>Note that you will not know that a block is multiply referenced until you find the second reference. You will have to figure out a way to go back and report ALL of the references. We must report all of the references, because each of them is likely to have been corrupted.</p>
+<h3 id="i-node-allocation-audits">I-node Allocation Audits</h3>
+<p>We can tell whether or not an I-node is allocated by looking at its type and presence in the CSV file. An allocated I-node will have some valid type (e.g., file or directory). Unallocated I-nodes (whose type should be zero) should not appear in INODE summaries, but should be in the free list. Scan through all of the I-nodes to determine which are valid/allocated. Every unallocated I-Node should be on a free I-node list. Compare your list of allocated/unallocated I-nodes with the free I-node bitmaps, and for each discovered inconsistency, a message like one of the following should be generated to stdout:</p>
+<pre><code>    ALLOCATED INODE 2 ON FREELIST
+    UNALLOCATED INODE 17 NOT ON FREELIST
+</code></pre>
+<h3 id="directory-consistency-audits">Directory Consistency Audits</h3>
+<p>Every allocated I-node should be referred to by the a number of directory entries that is equal to the reference count recorded in the I-node. Scan all of the directories to enumerate all links.</p>
+<p>For any allocated I-node whose reference count does not match the number of discovered links, an error message like the following should be generated to stdout:</p>
+<pre><code>    INODE 2 HAS 4 LINKS BUT LINKCOUNT IS 5
+</code></pre>
+<p>This message should also be used to report unreferenced I-nodes:</p>
+<pre><code>    INODE 17 HAS 0 LINKS BUT LINKCOUNT IS 1
+</code></pre>
+<p>Directory entries should only refer to valid and allocated I-nodes. An <code>INVALID</code> I-node is one whose number is less than 1 or greater than the last I-node in the system. While scanning the directory entries, check the validity and allocation status of each referenced I-node. For any reference to an invalid or unallocated I-node, an error message like the following should be generated to stdout:</p>
+<pre><code>    DIRECTORY INODE 2 NAME 'nullEntry' UNALLOCATED INODE 17
+    DIRECTORY INODE 2 NAME 'bogusEntry' INVALID INODE 26
+</code></pre>
+<p>We also know that every directory should begin with two links, one to itself (<strong>.</strong>) and one to its parent (<strong>..</strong>). While scanning each directory, check for the correctness of these two links and, for each detected inconsistency, a message like one of the following should be generated to stdout:</p>
+<pre><code>    DIRECTORY INODE 2 NAME '..' LINK TO INODE 11 SHOULD BE 2
+    DIRECTORY INODE 11 NAME '.' LINK TO INODE 2 SHOULD BE 11
+</code></pre>
+<h3 id="note">NOTE</h3>
+<p>As in the previous project, the file system summaries we use to test your submission will describe file systems with only a single group.</p>
+<h2 id="sample-damaged-file-system-summaries-and-output">SAMPLE DAMAGED FILE SYSTEM SUMMARIES AND OUTPUT</h2>
+<p>The <a href="http://web.cs.ucla.edu/classes/spring18/cs111/projects/P3B_check.sh">sanity check script</a> will automatically download a large number of damaged file system summaries. Run your program against them, and compare your output with (what I believe to be) the correct error reports. Note that the sanity check runs are timed. If your program is implemented inefficiently (e.g. too many scans, using too much memory) it may run so slowly as to time out and fail. If this happens to you, examine your approach and look for a more efficient way to obtain the required information.</p>
+<p>As with the previous project, your output will be sorted before it is compared with the golden results, so the order in which you output errors is unimportant.</p>
+<h2 id="summary-of-exit-codes">SUMMARY OF EXIT CODES:</h2>
+<ul>
+<li>0 ... successful execution, no inconsistencies found.</li>
+<li>1 ... unsuccessful execution, bad parameters or system call failure.</li>
+<li>2 ... successful execution, inconsistencies found.</li>
+</ul>
+<h2 id="submission">SUBMISSION:</h2>
+<p>Your <strong>README</strong> file must include lines of the form:</p>
+<p><strong>NAME:</strong> <em>your (comma separted) name(s)</em> <strong>EMAIL:</strong> <em>your (comma separted) email address(es)</em> <strong>ID:</strong> <em>your (comma separted) student ID(s)</em></p>
+<p>And, if slip days are allowed on this project, and you want to use some, this too must be included in the <strong>README</strong> file:</p>
+<p><strong>SLIPDAYS:</strong> <em>#days</em></p>
+<p>If, for instance, you wanted to use two slip-days, you would add the following line:</p>
+<p><strong>SLIPDAYS: 2</strong></p>
+<p>Your name, student ID, and email address should also appear as comments at the top of your <code>Makefile</code> and each source file. If this is a team submission, the names, e-mail addresses, and student IDs should be comma-separated.</p>
+<p>Your tarball should have a name of the form <code>lab3b-</code><em>studentID</em><code>.tar.gz</code>. If this is a team submission, only one student ID need appear in the tarball's name.
+You can sanity check your submission with this <a href="http://web.cs.ucla.edu/classes/spring18/cs111/projects/P3B_check.sh">test script</a>.
+Projects that do not pass the test script are likely to receive very poor scores!</p>
+<p>We will test it on a departmental Linux server. You would be well advised to test your submission on that platform before submitting it.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

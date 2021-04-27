@@ -711,8 +711,8 @@
                 
                 
                 <h1 id="p4-lite-filesystem-inspection">p4 lite: Filesystem inspection</h1>
-<p>In this lab, we will inspect filesystem images. We will reason about how filedata and metadata are stored and maintained. </p>
-<p>This is a light version of "Lab4: filesystem image forensics". </p>
+<p>We will inspect filesystem images. We will reason about how filedata and metadata are stored and maintained. </p>
+<p>This is a light version of "p4: filesystem image forensics". </p>
 <h2 id="objectives">Objectives</h2>
 <ul>
 <li>(primary) Reinforcing understanding of ext2</li>
@@ -725,6 +725,8 @@
 <li>Show how such a filesystem image is created</li>
 </ul>
 <h2 id="prerequisites">Prerequisites</h2>
+<pre><code>git clone https://github.com/fxlin/p4-fs
+</code></pre>
 <p><strong>Required environment</strong> </p>
 <p>Fiddling with a whole filesystem (and disk images) requires the root privilege. </p>
 <ul>
@@ -877,9 +879,7 @@ $ sudo dd if=/dev/loop2 bs=1024 skip=10 count=1 status=none |xxd -b -l 256
 </code></pre>
 <p>In the commands above, <code>dd</code> will read the contents of the disk device (note: your /dev/loop device name may vary). "bs=1024 skip=11 count=1" means that <code>dd</code> will skip the first 11 blocks and read in 1 block, using 1024 bytes as the block size. </p>
 <blockquote>
-<blockquote>
 <p>note "blocks" here are just data blocks for dd to read in; it's orthogonal to disk blocks)</p>
-</blockquote>
 </blockquote>
 <p>The content of the read block is piped to <code>xxd</code>, whose job is to display the content nicely in binary format. "-b" means xxd will display <strong>every bit</strong>. "-l" means the number of "octets" to display. Each octets is a "display group" of eight characters (e.g. "11111111"). Since we are display bits, each chaterters is a bit and one octet is a byte. </p>
 <h2 id="step-3-inspect-per-file-metadata">Step 3. Inspect per-file metadata</h2>

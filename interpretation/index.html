@@ -646,12 +646,12 @@
                 <h1 id="p4exp1-file-system-interpretation">p4exp1 File System Interpretation</h1>
 <h2 id="introduction">INTRODUCTION:</h2>
 <p>We are all familiar with the characteristics of the files and directories in which we store all of our data. As with many other persistent objects, their functionality, generality, performance and robustness all derive from the underlying data structures used to implement them. In this project we will design and implement a program to read the on-disk representation of a file system, analyze it, and summarize its contents. In the next project, we will write a program to analyze this summary for evidence of corruption.</p>
-<p>This project can be broken into two major steps:</p>
+<p>This assignment can be broken into two major steps:</p>
 <ul>
 <li>Understand the on-disk data format of the EXT2 file system. We will mount a provided image file on your own Linux system and explore it with familiar file navigation commands and <em>debugfs(8)</em>.</li>
 <li>Write a program to analyze the file system in that image file and output a summary to standard out (describing the super block, groups, free-lists, inodes, indirect blocks, and directories).</li>
 </ul>
-<p>The second part may involve much more code than we have written in previous projects, but the first part is (by far) the more difficult. Once the underlying data structures are understood, the actual code is likely to be fairly simple.</p>
+<p>The second part may involve more code than we have written in previous projects, but the first part is (by far) the more difficult. Once the underlying data structures are understood, the actual code is likely to be fairly simple.</p>
 <h2 id="relation-to-reading-and-lectures">RELATION TO READING AND LECTURES:</h2>
 <!--- This project more deeply explores the filesystem structures described in Arpaci chapter 39. --->
 <p>The images we will be working with are EXT2 file systems</p>
@@ -660,19 +660,19 @@
 <ul>
 <li>Primary: reinforce the basic file system concepts of directory objects, file objects, and free space.</li>
 <li>Primary: reinforce the implementation descriptions provided in the text and lectures.</li>
-<li>Primary: gain experience researching, examining, interpreting and processing information in <strong>complex binary data structures</strong>.</li>
+<li>Primary: gain experience researching, examining, interpreting and processing information in complex binary data structures.</li>
 <li>Primary: gain experience with examining interpreted and raw hex dumps of complex data structures as a means of developing an understanding of those data structures.</li>
 <li>Secondary: gain practical experience with typical on-disk file system data formats.</li>
 </ul>
 <h2 id="deliverables">DELIVERABLES:</h2>
 <p>A single tarball (<code>.tar.gz</code>) containing:</p>
 <ul>
-<li>(at least) one C/C++ source module that compiles cleanly with no errors or warnings).</li>
+<li>(at least) one C/C++ source module that compiles cleanly with no errors or warnings.</li>
 <li>
 <p>A Makefile to build and run the deliverable program. The higher level targets should be:</p>
 </li>
 <li>
-<p><strong>default</strong> ... compile your program (with the <code>-Wall</code> and <code>-Wextra</code> options) to produce an executable</p>
+<p><strong>default</strong> ... compile your program (with the <code>-Wall</code> and <code>-Wextra</code> options) to produce an executable named <code>parser</code></p>
 </li>
 <li><strong>dist</strong> ... create the deliverable tarball</li>
 <li>
@@ -698,7 +698,7 @@
 <!--- what is standard header file??--->
 
 <h3 id="part-1-exploring-an-ext2-image">PART 1: Exploring an EXT2 Image</h3>
-<p>In order to mount and explore a file system (even one stored in an ordinary file) you will need the ability to run privileged commands (e.g., <em>mount(8)</em>). Since you will not have <em>sudo(8)</em> access on departmental servers, you will have to do this exploration on your own personal Linux system.</p>
+<p>In order to mount and explore a file system (even one stored in an ordinary file) you will need the ability to run privileged commands (e.g., <em>mount(8)</em>). Since you will not have <em>sudo(8)</em> access on departmental servers, you will have to do this exploration on your own personal Linux system or WSL.</p>
 <p>Grab the 1MB file system image from the project repo (EXT2_test.img), and mount it read-only onto your own Linux system, with the following commands:</p>
 <pre><code>    mkdir fs
     sudo mount -o ro,loop ext2_image fs
@@ -732,9 +732,8 @@
 <ul>
 <li>Reads a file system image, whose name is specified as a command line argument. For example, we may run your program with the above file system image using the a command like:</li>
 </ul>
-<p>```
-    ./p4exp1 EXT2_test.img</p>
-<p>```</p>
+<pre><code>./p4exp1 EXT2_test.img
+</code></pre>
 <ul>
 <li>Analyzes the provided file system image and produces (to standard out) CSV summaries of what it finds. The contents of these CSV lines described below. Your program must output these files with exactly the same formats as shown below. We will use <em>sort(1)</em> and <em>diff(1)</em> to compare your csv output with ours, so the order of output lines does not matter, but a different format (even extra white space) will make your program fail the test.</li>
 </ul>

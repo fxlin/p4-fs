@@ -2,7 +2,11 @@
 
 We will inspect filesystem images. We will reason about the filesystem structures, extract useful information (programmatically), and verify their integrity. 
 
-**To be completed on your own machine:** WSL, OSX, or Linux. **Cannot be done on granger1/2.** 
+**To be completed on your own machine:** WSL, or Linux. 
+
+Mac users: try Digital Ocean https://www.digitalocean.com/ You can have a free account. 
+
+**Cannot be done on granger1/2.** 
 
 ## Objective
 

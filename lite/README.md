@@ -1,8 +1,8 @@
 # Proj4 Lite: Filesystem inspection
 
-In this lab, we will inspect filesystem images. We will reason about how filedata and metadata are stored and maintained. 
+In this experiment, we will inspect filesystem images. We will reason about how filedata and metadata are stored and maintained. 
 
-This is a light version of "Lab4: filesystem image forensics". 
+<!--This is a light version of "Lab4: filesystem image forensics".--> 
 
 [TOC]
 
@@ -19,7 +19,7 @@ This is a light version of "Lab4: filesystem image forensics".
 ## Prerequisites 
 **Required environment** 
 
-Fiddling with a whole filesystem (and disk images) requires the root privilege. So do this lab either on your Linux box which you have root; or do it on the server (e.g. granger1), inside a QEMU emulator. The problem with QEMU: you will need a system image with all the utilities, e.g. dumpe2fs, etc. Can be built with buildroot which requires some exploration.
+Fiddling with a whole filesystem (and disk images) requires the root privilege. So do the following experiment either on your Linux box which you have root; or do it on the server (e.g. granger1), inside a QEMU emulator. The problem with QEMU: you will need a system image with all the utilities, e.g. dumpe2fs, etc. Can be built with buildroot which requires some exploration.
 
 Windows users: this experiment can be completely done on Windows 10. These [instructions](./wsl.md) may help (credits: Andrew Jackman). 
 
@@ -37,7 +37,7 @@ xxd, hexdump: display binary data
 The image file is a byte-to-byte dump of a small disk. The disk size is 2MB. 
 
 ```
-# grab the file from this git repo, and unzip it 
+# grab the file from this git repo (path: lite/disk.img.gz), and unzip it 
 gzip -d disk.img.gz
 ```
 

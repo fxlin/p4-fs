@@ -62,7 +62,7 @@ To perform this assignment, you may need to study a few things:
 
 ### PART 1: Exploring an EXT2 Image
 
-Follow the steps in [lite/README.md](). 
+Follow the steps in [here](lite.md). 
 
 ### PART 2: Summarizing an EXT2 Image
 

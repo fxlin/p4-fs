@@ -6,7 +6,7 @@ We will inspect filesystem images. We will reason about the filesystem structure
 
 Mac users: try Digital Ocean https://www.digitalocean.com/ You can have a free account. 
 
-**Cannot be done on granger1/2.** 
+**Contain some exercises requiring the root privilege, which cannot be done on granger1/2. ** 
 
 ## Objective
 

@@ -1,10 +1,8 @@
-# Proj4 Lite: Filesystem inspection
+# p4 lite: Filesystem inspection
 
 In this experiment, we will inspect filesystem images. We will reason about how filedata and metadata are stored and maintained. 
 
 <!--This is a light version of "Lab4: filesystem image forensics".--> 
-
-[TOC]
 
 ## Objectives
 * (primary) Reinforcing understanding of ext2
@@ -17,20 +15,27 @@ In this experiment, we will inspect filesystem images. We will reason about how 
 * Show how such a filesystem image is created
 
 ## Prerequisites 
+```
+git clone https://github.com/fxlin/p4-fs
+```
+
 **Required environment** 
 
 Fiddling with a whole filesystem (and disk images) requires the root privilege. So do the following experiment either on your Linux box which you have root; or do it on the server (e.g. granger1), inside a QEMU emulator. The problem with QEMU: you will need a system image with all the utilities, e.g. dumpe2fs, etc. Can be built with buildroot which requires some exploration.
 
-Windows users: this experiment can be completely done on Windows 10. These [instructions](./wsl.md) may help (credits: Andrew Jackman). 
+* Linux users: do this lab either on your local box which you have root. Or do it on the server, inside a QEMU emulator. The problem with QEMU: you will need a system image with all the utilities, e.g. dumpe2fs, etc. Can be built with buildroot which requires some exploration.
+* Windows users: do this on WSL. These [instructions](./wsl.md) may help (credits: Andrew Jackman). 
+* Mac Users: try https://www.digitalocean.com/ for which you can have a free account
 
 **The tools we will use** 
-ls: show directory content
-dd: read/write raw content of a file (or a disk partition)
-mkfs.ext2: create a new ext2 filesystem
-debugfs: ext filesystem debugger 
-stat: get file status
-dumpe2fs: dump ext filesystem info
-xxd, hexdump: display binary data
+
+* ls: show directory content
+* dd: read/write raw content of a file (or a disk partition)
+* mkfs.ext2: create a new ext2 filesystem
+*   debugfs: ext filesystem debugger 
+*   stat: get file status
+*   dumpe2fs: dump ext filesystem info
+*   xxd, hexdump: display binary data
 
 ## Step 1. Grab the disk image, mount, & basic inspection
 
@@ -194,7 +199,7 @@ $ sudo dd if=/dev/loop2 bs=1024 skip=10 count=1 status=none |xxd -b -l 256
 
 In the commands above, `dd` will read the contents of the disk device (note: your /dev/loop device name may vary). "bs=1024 skip=11 count=1" means that `dd` will skip the first 11 blocks and read in 1 block, using 1024 bytes as the block size. 
 
->  >  note "blocks" here are just data blocks for dd to read in; it's orthogonal to disk blocks)
+>  note "blocks" here are just data blocks for dd to read in; it's orthogonal to disk blocks)
 
 The content of the read block is piped to `xxd`, whose job is to display the content nicely in binary format. "-b" means xxd will display **every bit**. "-l" means the number of "octets" to display. Each octets is a "display group" of eight characters (e.g. "11111111"). Since we are display bits, each chaterters is a bit and one octet is a byte. 
 

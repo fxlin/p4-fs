@@ -116,6 +116,8 @@ Scan each of the groups in the file system. For each group, produce a new-line t
 <!--each group, in addition to its group summary, also (for redundancy) starts with a copy of the file system superblock.-->
 <!--But, in the images we give you, there will be only a single group.-->
 
+A detail: of a disk, block 0 is the boot block. Therefore, group 0 has 1 fewer block than any other groups. Example: group size is 64; group 0 spans block 1--63. You can verify this by `dumpe2fs`. Despite this, in your output for group 0, still output the actual group size, e.g. 64 in the above example. 
+
 #### free block entries
 
 Scan the free block bitmap for each group. For each free block, produce a new-line terminated line, with two comma-separated fields (with no white space).

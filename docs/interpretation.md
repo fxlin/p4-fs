@@ -165,7 +165,22 @@ The *number of blocks* (field 12) should contain the same value as the *i_blocks
 2. This number (times 512) may be smaller than the file size, as it includes only blocks that have actually been allocated to the file. A very large file might be [sparse](https://en.wikipedia.org/wiki/Sparse_file), in that some parts of the file may not have actually been written, and take up no disk space, but will read back as zeroes.
 3. This number (times 512) may be larger than the file size because it includes not only data blocks, but (single, double, and triple) indirect blocks that point to data blocks.
 
-For ordinary files (type 'f') and directories (type 'd') the next fifteen fields are block addresses (decimal, 12 direct, one indirect, one double indirect, one triple indirect). Symbolic links are a little more complicated. If the file length is less than the size of the block pointers (60 bytes) the file will contain zero data blocks, and the name is stored in the space normally occupied by the block pointers. If this is the case, the fifteen block pointers need not be printed.
+For ordinary files (type 'f') and directories (type 'd') the next fifteen fields are block addresses (decimal, 12 direct, one indirect, one double indirect, one triple indirect). 
+
+**Symbolic links**. If the file length is less than the size of the block pointers (60 bytes) the file will contain zero data blocks, and the name (a text string) is stored in the space normally occupied by the block pointers (i.e. inline). 
+
+For an inline symbolic link: 
+
+* field 13: print the first four bytes of the name as unsigned int (decimal)
+
+* no field 14 and beyond
+
+Otherwise, a symbolic link actually occupies data block(s): 
+
+* field 13 and beyond: only print the non-zero block addresses (unlike a normal file when you would print all 0s)
+* Aside: for some reason, the num of blocks (field 12) can be == the actual number of blocks + 1 (e.g. one non-zero block, while field 12 is 2). This is also the behavior of trivial.csv and debugfs. Just do that. 
+
+While these rules may appear confusing, you will find examples in trivial.csv. Just make your output consistent with it!
 
 #### directory entries
 

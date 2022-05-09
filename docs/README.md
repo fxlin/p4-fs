@@ -4,7 +4,11 @@ We will inspect filesystem images. We will reason about the filesystem structure
 
 **To be completed on your own machine:** WSL, or Linux. 
 
-Mac users: try Digital Ocean https://www.digitalocean.com/ You can have a free account. 
+Mac users: the following solutions should work
+
+	* AWS free tier https://aws.amazon.com/free
+	* Digital Ocean https://www.digitalocean.com/ You can have a free account. 
+	* A Ubuntu VM on VMWare fusion, free to download as a student
 
 **Contain some exercises requiring the root privilege, which cannot be done on granger1/2. ** 
 

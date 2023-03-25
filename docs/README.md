@@ -1,5 +1,7 @@
 # P4: Filesystem image forensics
 
+Code: https://github.com/fxlin/p4-fs
+
 We will inspect filesystem images. We will reason about the filesystem structures, extract useful information (programmatically), and verify their integrity. 
 
 **To be completed on your own machine:** WSL, or Linux. 

@@ -6,7 +6,7 @@ We will inspect filesystem images. We will reason about the filesystem structure
 
 **To be completed on your own machine:** WSL, or Linux. 
 
-Mac users: the following solutions should work
+Mac users: use free VM service. Try one of the following solutions: 
 
 	* AWS free tier https://aws.amazon.com/free
 	* Digital Ocean https://www.digitalocean.com/ You can have a free account. 
@@ -21,7 +21,7 @@ Mac users: the following solutions should work
 
 ## Overview
 
-This las has two phases. Each phase has its own description and assignments. 
+This project has two experiments. Each has its own description and assignments. 
 
 * [Interpretation](interpretation.md): parse given ext2 images and dump their key data structures.
 

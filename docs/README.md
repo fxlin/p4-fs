@@ -12,7 +12,7 @@ Mac users: the following solutions should work
 	* Digital Ocean https://www.digitalocean.com/ You can have a free account. 
 	* A Ubuntu VM on VMWare fusion, free to download as a student
 
-**Contain some exercises requiring the root privilege, which cannot be done on granger1/2. ** 
+**Contain some exercises requiring the root privilege, which cannot be done on granger1/2.** 
 
 ## Objective
 

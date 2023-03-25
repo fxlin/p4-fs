@@ -57,7 +57,7 @@ $ ls -lh disk.img
 ```
 > Because our filesystem only uses a small fraction of the disk space (we will see soon), most of these bytes are zero. That's why we compress the disk image (as .gz) for distribution. 
 
-Next, we mount the disk image as a loop device. (Recall: a loop device treats a file as a physical disk; see our lecture slides). 
+Next, we mount the disk image as a loop device. (Recall: a loop device treats a file as a physical disk; see our lecture slides). **AGAIN, YOU WONT' BE ABLE TO DO THIS ON GRANGER1/2** (cf: the landing page)
 
 ```
 # create our mount point

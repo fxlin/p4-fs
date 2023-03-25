@@ -116,7 +116,7 @@ Scan each of the groups in the file system. For each group, produce a new-line t
 <!--each group, in addition to its group summary, also (for redundancy) starts with a copy of the file system superblock.-->
 <!--But, in the images we give you, there will be only a single group.-->
 
-A detail: of a disk, block 0 is the boot block. Therefore, group 0 has 1 fewer block than any other groups. Example: group size is 64; group 0 spans block 1--63. You can verify this by `dumpe2fs`. Despite this, in your output for group 0, still output the actual group size, e.g. 64 in the above example. 
+**NOTE**: of a disk, **block 0 is the boot block**. Therefore, group 0 has 1 fewer block than any other groups. Example: group size is 64; group 0 spans block 1--63. You can verify this by `dumpe2fs`. Despite this, in your output for group 0, still output the actual group size, e.g. 64 in the above example. 
 
 #### free block entries
 
@@ -168,6 +168,8 @@ The *number of blocks* (field 12) should contain the same value as the *i_blocks
 3. This number (times 512) may be larger than the file size because it includes not only data blocks, but (single, double, and triple) indirect blocks that point to data blocks.
 
 For ordinary files (type 'f') and directories (type 'd') the next fifteen fields are block addresses (decimal, 12 direct, one indirect, one double indirect, one triple indirect). 
+
+**Timestamp format**. If you notice there's an offset between yours and the sample dump: make sure you print time in GMT instead of local time such as GST. 
 
 **Symbolic links**. If the file length is less than the size of the block pointers (60 bytes) the file will contain zero data blocks, and the name (a text string) is stored in the space normally occupied by the block pointers (i.e. inline). 
 

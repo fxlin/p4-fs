@@ -1,4 +1,4 @@
-# p4exp2 File System Consistency Analysis
+# File System Consistency Analysis (exp2)
 
 ## INTRODUCTION:
 

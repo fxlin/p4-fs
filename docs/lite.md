@@ -1,5 +1,9 @@
 # p4 lite: Filesystem inspection
 
+**Reading time: 30min**
+
+**This writeup describes how to use EXISTING tools to inspect a filesystem image. No code is written.**
+
 In this experiment, we will inspect filesystem images. We will reason about how filedata and metadata are stored and maintained. 
 
 <!--This is a light version of "Lab4: filesystem image forensics".--> 

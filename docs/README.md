@@ -25,9 +25,9 @@ Mac users: use free VM service. Try one of the following solutions:
 
 This project has two experiments. Each has its own description and assignments. 
 
-* [Interpretation](interpretation.md): parse given ext2 images and dump their key data structures.
+* [exp1: Interpretation](interpretation.md): parse given ext2 images and dump their key data structures.
 
-* [Consistency](consistency.md): check given ext2 images and report any inconsistency 
+* [exp2: Consistency](consistency.md): check given ext2 images and report any inconsistency 
 
 ## Files
 

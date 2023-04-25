@@ -1,6 +1,6 @@
 # File System Interpretation (exp1)
 
-In this lab, we will inspect filesystem images. We will reason about how filedata and metadata are stored and maintained. 
+In this exp, we will inspect filesystem images. We will reason about how filedata and metadata are stored and maintained. 
 
 ## Objectives
 
@@ -20,15 +20,16 @@ git clone https://github.com/fxlin/p4-fs
 
 **Required environment** 
 
-Fiddling with a whole filesystem (and disk images) requires the root privilege. So do this lab either on your Linux box which you have root; or do it on the server (e.g. granger1), inside a QEMU emulator. The problem with QEMU: you will need a system image with all the utilities, e.g. dumpe2fs, etc. Can be built with buildroot which requires some exploration.
+Fiddling with a whole filesystem (and disk images) requires the root privilege. So do this exp either on your Linux box and WSL which you have root. 
 
-Windows users: this experiment can be completely done on Windows 10. These [instructions](./wsl.md) may help (credits: Andrew Jackman). 
+You MAY try it inside a QEMU emulator on the server (e.g. granger1). The problem with QEMU: you will need a system image with all the utilities, e.g. dumpe2fs, etc. Can be built with buildroot which requires some exploration. 
+So consider this as an unbeaten path. I'll be happy to learn if you pull it off.
 
 **Choice of programming langauges**
 
 You can use any programming language (C/C++, Python, Java...). 
 
-C/C++ code can directly use the C header we provide to manipulate ext2 data structures; other programming languages will have to manipulate those bits per the C header. Read on. 
+C/C++ code can directly use the C header we provide to manipulate ext2 data structures; other programming languages will have to manipulate those bits per the C header. 
 
 ## DELIVERABLES:
 

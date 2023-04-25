@@ -40,7 +40,7 @@ nav:
   - exp1: interpretation.md
   - exp2: consistency.md
   - lite: lite.md    
-  - /wsl: wsl.md
+ # - /wsl: wsl.md
   #- Device:
    # - Hikey: devices/hikey.md
     #- Odroid: devices/odroid.md

@@ -39,7 +39,7 @@ plugins:
 nav:
   - exp1: interpretation.md
   - exp2: consistency.md
-  - lite: lite.md    
+  - cmd: lite.md    
  # - /wsl: wsl.md
   #- Device:
    # - Hikey: devices/hikey.md

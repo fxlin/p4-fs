@@ -1,4 +1,4 @@
-# p4 lite: Filesystem inspection
+# File System Interpretation (using commands)
 
 **Reading time: 30min**
 

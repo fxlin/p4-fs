@@ -2,7 +2,7 @@
 
 The code location is at: https://github.com/fxlin/p4-fs
 
-We will inspect filesystem images. We will reason about the filesystem structures, extract useful information (programmatically), and verify their integrity. 
+We will inspect filesystem images. We will reason about the filesystem structures, extract useful information (both using existing tools and programmatically), and verify their integrity. 
 
 ## Environment 
 
@@ -26,8 +26,9 @@ Mac users: use free VM service. Try one of the following solutions:
 This project has two experiments. Each has its own description and assignments. 
 
 * [exp1: Interpretation](interpretation.md): parse given ext2 images and dump their key data structures.
-
 * [exp2: Consistency](consistency.md): check given ext2 images and report any inconsistency 
+
+**NOTE: depending on semester, students may do exp1 only, or exp1+exp2. Always refer to the syllabus.**
 
 ## Files
 

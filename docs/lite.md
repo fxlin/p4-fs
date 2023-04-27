@@ -1,4 +1,4 @@
-# File System Interpretation (using commands)
+# File System Interpretation w/ commands (part of exp1)
 
 **Reading time: 30min**
 
@@ -27,9 +27,9 @@ git clone https://github.com/fxlin/p4-fs
 
 Fiddling with a whole filesystem (and disk images) requires the root privilege. So do the following experiment either on your Linux box which you have root; or do it on the server (e.g. granger1), inside a QEMU emulator. The problem with QEMU: you will need a system image with all the utilities, e.g. dumpe2fs, etc. Can be built with buildroot which requires some exploration.
 
-* Linux users: do this lab either on your local box which you have root. Or do it on the server, inside a QEMU emulator. The problem with QEMU: you will need a system image with all the utilities, e.g. dumpe2fs, etc. Can be built with buildroot which requires some exploration.
-* Windows users: do this on WSL. These [instructions](./wsl.md) may help (credits: Andrew Jackman). 
-* Mac Users: try https://www.digitalocean.com/ for which you can have a free account
+* Linux users: do this exp either on your local box which you have root. Or do it on the server, inside a QEMU emulator. The problem with QEMU: you will need a system image with all the utilities, e.g. dumpe2fs, etc. Can be built with buildroot which requires some exploration.
+* Windows users: do this on WSL. 
+* Mac Users: see [the landing page](README.md).
 
 **The tools we will use** 
 

@@ -173,7 +173,7 @@ The *number of blocks* (field 12) should contain the same value as the *i_blocks
 
 For ordinary files (type 'f') and directories (type 'd') the next fifteen fields are block addresses (decimal, 12 direct, one indirect, one double indirect, one triple indirect). 
 
-**Timestamp format**. Related functions: gmtime() and strftime(), both in <time.h> If you notice there's an offset between yours and the sample dump: make sure you print time in GMT instead of local time such as GST. 
+**Timestamp format**. Related functions: gmtime() and strftime(), both in `<time.h>`.  If you notice there's an offset between yours and the sample dump: make sure you print time in GMT instead of local time such as GST. 
 
 **Symbolic links**. If the file length is less than the size of the block pointers (60 bytes) the file will contain zero data blocks, and the name (a text string) is stored in the space normally occupied by the block pointers (i.e. inline). 
 

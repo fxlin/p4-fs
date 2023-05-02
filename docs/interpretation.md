@@ -215,11 +215,11 @@ The I-node summary contains a list of all 12 blocks, and the primary single, dou
 5. block number of the (1, 2, 3) indirect block being scanned (decimal) . . . not the highest level block (in the recursive scan), but the lower level block that contains the block reference reported by this entry.
 6. block number of the referenced block (decimal)
 
-*Logical block* is a commonly used term. It ignores physical file structure (where data is actually stored, indirect blocks, sparseness, etc) and views the data in the file as a (logical) stream of bytes. If the block size was 1K (1024 bytes):
+**What is a logical block?** Given a file, let us ignore the file's physical structure (where data is actually stored, indirect blocks, sparseness, etc) and view the data in the file as a (logical) stream of bytes. If the block size is 1K (1024 bytes):
 
-- bytes 0-1023 would be in logical block 0
-- bytes 1024-2047 would be in logical block 1
-- bytes 2048-3071 would be in logical block 2
+- bytes 0-1023 would be in logical block 0 of the file 
+- bytes 1024-2047 would be in logical block 1 of the file 
+- bytes 2048-3071 would be in logical block 2 of the file 
 - ...
 
 You can confirm your understanding of logical block numbers by looking at the `INDIRECT` entries in the sample output.

@@ -1,6 +1,6 @@
 # HOW TO GRADE
 
-## Generate the test filesystem image. Use: EXT2_test.script  
+## Generate the test filesystem image. Use: EXT2_test.script (boilerplate)
 
 * Follow step 0 in docs/lite.md to create & mount a blank file system image
 * (Modify the above script to customize the test filesystem image)

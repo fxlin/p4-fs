@@ -215,12 +215,13 @@ We can use `ls` to get more information.
 
 ```
 $ ls -ila
-total 54
-      2 drwxr-xr-x  4 root root  1024 Apr  6 11:35 .
-5636097 drwxrwxrwt 38 root root 36864 Apr  6 11:35 ..
-     12 -rw-r--r--  1 root root     0 Apr  2 23:56 aa
-     11 drwx------  2 root root 12288 Apr  2 23:53 lost+found
-     13 drwxr-xr-x  2 root root  1024 Apr  6 11:35 testdir
+total 31
+    2 drwxr-xr-x  4 root root  1024 Apr  6  2020 .
+57346 drwxrwxrwt 39 root root 16384 May  4 16:07 ..
+   12 -rw-r--r--  1 root root    10 Apr  6  2020 aa
+   14 lrwxrwxrwx  1 root root     2 Apr  6  2020 aa-symlink -> aa
+   11 drwx------  2 root root 12288 Apr  2  2020 lost+found
+   13 drwxr-xr-x  2 root root  1024 Apr  6  2020 testdir
      
 $ ls -ila testdir/
 total 2

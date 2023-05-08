@@ -8,7 +8,7 @@ We will inspect filesystem images. We will reason about the filesystem structure
 
 **Contain some exercises requiring the root privilege, which cannot be done on granger1/2.** 
 
-**To be completed on your own machine:** WSL, or Linux. 
+**To be completed on your own machine:** WSL2 (not WSL1), or Linux. 
 
 Mac users: use free VM service. Try one of the following solutions: 
 

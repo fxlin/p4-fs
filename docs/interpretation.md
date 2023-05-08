@@ -20,7 +20,7 @@ git clone https://github.com/fxlin/p4-fs
 
 **Required environment** 
 
-Fiddling with a whole filesystem (and disk images) requires the root privilege. So do this exp either on your Linux box and WSL which you have root. 
+Fiddling with a whole filesystem (and disk images) requires the root privilege. So do this exp either on your Linux box and WSL2 which you have root. WSL1 is known to have issue with `mount`. 
 
 You MAY try it inside a QEMU emulator on the server (e.g. granger1). The problem with QEMU: you will need a system image with all the utilities, e.g. dumpe2fs, etc. Can be built with buildroot which requires some exploration. 
 So consider this as an unbeaten path. I'll be happy to learn if you pull it off.

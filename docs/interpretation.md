@@ -60,7 +60,7 @@ To perform this assignment, you may need to study a few things:
 - [debugfs(8)](http://man7.org/linux/man-pages/man8/debugfs.8.html), a tool for exploring on-disk file system structures.
 - [pread(2)](http://man7.org/linux/man-pages/man2/pread.2.html), an alternative to *read(2)* for random-access file processing.
 - a comprehensive overview of the [EXT2](http://www.nongnu.org/ext2-doc/ext2.html) file system format.
-- a slightly simplified version of the Linux [header file](http:Interpretation//web.cs.ucla.edu/classes/spring18/cs111/projects/ext2_fs.h) that defines the format of the EXT2 file system. Do not assume that the standard header file will be available on the test system. Please use this header file and include it in your submission. You cannot modify this header file, but you are free to add new files of your own.
+- a slightly simplified version of the Linux header file that defines the format of the EXT2 file system. Do not assume that the standard header file will be available on the test system. Please use this header file and include it in your submission. You cannot modify this header file, but you are free to add new files of your own.
 
 <!--- what is standard header file??--->
 

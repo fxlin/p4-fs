@@ -31,6 +31,8 @@ You can use any programming language (C/C++, Python, Java...).
 
 C/C++ code can directly use the C header we provide to manipulate ext2 data structures; other programming languages will have to manipulate those bits per the C header. 
 
+You need to parse filesystem data structures using your own code. You cannot rely on existing ext2 libraries or tools (such as dumpe2fs) and parse their output. 
+
 ## DELIVERABLES:
 
 A single tarball (`.tar.gz`) containing:

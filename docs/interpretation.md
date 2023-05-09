@@ -185,6 +185,8 @@ For an inline symbolic link:
 
 * Example line from trivial.csv: `INODE,15,s,777,1028 ... 08/07/17 17:58:47,26,0,1886221359`
 
+* If you run into some bug, make sure you get the byte order right (big endian vs. little endian)
+
 Otherwise, a symbolic link actually occupies data block(s): 
 
 * field 13 and beyond: only print the non-zero block addresses (unlike a normal file when you would print all 0s)

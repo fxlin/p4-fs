@@ -8,9 +8,9 @@ We will inspect filesystem images. We will reason about the filesystem structure
 
 **Contain some exercises requiring the root privilege, which cannot be done on granger1/2.** 
 
-**To be completed on your own machine:** WSL2 (not WSL1), or Linux. 
+**Windows/Linux users: **To be completed on your own machine. Windows users must use WSL2 (not WSL1).
 
-Mac users: use free VM service. Try one of the following solutions: 
+**Mac users:** use free VM service. Try one of the following solutions: 
 
 * AWS free tier https://aws.amazon.com/free
 * Digital Ocean https://www.digitalocean.com/ You can have a free account. 
@@ -28,9 +28,9 @@ This project has two experiments. Each has its own description and assignments.
 * [exp1: Interpretation](interpretation.md): parse given ext2 images and dump their key data structures.
 * [exp2: Consistency](consistency.md): check given ext2 images and report any inconsistency 
 
-**NOTE: depending on semester, students may do exp1 only, or exp1+exp2. Always refer to the syllabus.**
+**NOTE: depending on course offerings, students may do exp1 only, or exp1+exp2. Always refer to the syllabus.**
 
-## Files
+## Important files
 
 ext2_fs.h: the header file that contains many ext2 defs
 
@@ -41,6 +41,3 @@ EXT2_test.img, EXT2_test.csv: a 1MB ext2 image and its sample dump
 
 ## Credits
 Derived from UCLA CS111
-
-
-

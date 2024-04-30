@@ -1,0 +1,853 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+        <link rel="next" href="../consistency/">
+      
+      <link rel="icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>exp1 - p4-fs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#file-system-interpretation-exp1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="p4-fs" class="md-header__button md-logo" aria-label="p4-fs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            p4-fs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              exp1
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    
+  
+
+
+  <li class="md-tabs__item">
+    <a href="./" class="md-tabs__link md-tabs__link--active">
+      exp1
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../consistency/" class="md-tabs__link">
+      exp2
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../lite/" class="md-tabs__link">
+      cmd
+    </a>
+  </li>
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="p4-fs" class="md-nav__button md-logo" aria-label="p4-fs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    p4-fs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          exp1
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        exp1
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objectives" class="md-nav__link">
+    Objectives
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roadmap" class="md-nav__link">
+    Roadmap
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deliverables" class="md-nav__link">
+    DELIVERABLES:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-description" class="md-nav__link">
+    PROJECT DESCRIPTION:
+  </a>
+  
+    <nav class="md-nav" aria-label="PROJECT DESCRIPTION:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#part-1-exploring-an-ext2-image" class="md-nav__link">
+    PART 1: Exploring an EXT2 Image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-2-summarizing-an-ext2-image" class="md-nav__link">
+    PART 2: Summarizing an EXT2 Image
+  </a>
+  
+    <nav class="md-nav" aria-label="PART 2: Summarizing an EXT2 Image">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#superblock-summary" class="md-nav__link">
+    superblock summary
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#group-summary" class="md-nav__link">
+    group summary
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#free-block-entries" class="md-nav__link">
+    free block entries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#free-i-node-entries" class="md-nav__link">
+    free I-node entries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-node-summary" class="md-nav__link">
+    I-node summary
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#directory-entries" class="md-nav__link">
+    directory entries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indirect-block-references" class="md-nav__link">
+    indirect block references
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-output" class="md-nav__link">
+    Sample Output
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementation-strategy" class="md-nav__link">
+    Implementation strategy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../consistency/" class="md-nav__link">
+        exp2
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lite/" class="md-nav__link">
+        cmd
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objectives" class="md-nav__link">
+    Objectives
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roadmap" class="md-nav__link">
+    Roadmap
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deliverables" class="md-nav__link">
+    DELIVERABLES:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-description" class="md-nav__link">
+    PROJECT DESCRIPTION:
+  </a>
+  
+    <nav class="md-nav" aria-label="PROJECT DESCRIPTION:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#part-1-exploring-an-ext2-image" class="md-nav__link">
+    PART 1: Exploring an EXT2 Image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-2-summarizing-an-ext2-image" class="md-nav__link">
+    PART 2: Summarizing an EXT2 Image
+  </a>
+  
+    <nav class="md-nav" aria-label="PART 2: Summarizing an EXT2 Image">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#superblock-summary" class="md-nav__link">
+    superblock summary
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#group-summary" class="md-nav__link">
+    group summary
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#free-block-entries" class="md-nav__link">
+    free block entries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#free-i-node-entries" class="md-nav__link">
+    free I-node entries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-node-summary" class="md-nav__link">
+    I-node summary
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#directory-entries" class="md-nav__link">
+    directory entries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indirect-block-references" class="md-nav__link">
+    indirect block references
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-output" class="md-nav__link">
+    Sample Output
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementation-strategy" class="md-nav__link">
+    Implementation strategy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="file-system-interpretation-exp1">File System Interpretation (exp1)</h1>
+<p>In this exp, we will inspect filesystem images. We will reason about how filedata and metadata are stored and maintained. </p>
+<h2 id="objectives">Objectives</h2>
+<ul>
+<li>(primary) Reinforcing understanding of ext2</li>
+<li>(secondary) Working with binary data structures</li>
+</ul>
+<h2 id="roadmap">Roadmap</h2>
+<ul>
+<li>Understand the on-disk data format of the EXT2 file system. We will mount a provided image file on your own Linux system and explore it with familiar file navigation commands and <em>debugfs(8)</em>.</li>
+<li>Write a program to analyze the file system in that image file and output a summary to standard out (describing the super block, groups, free-lists, inodes, indirect blocks, and directories).</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<pre><code>git clone https://github.com/fxlin/p4-fs
+</code></pre>
+<p><strong>Required environment</strong> </p>
+<p>Fiddling with a whole filesystem (and disk images) requires the root privilege. So do this exp either on your Linux box, or Windows WSL2, for which you have root. <strong>WARNING</strong>: WSL1 is known to have issue with <code>mount</code>. </p>
+<p>(Adventurous) You MAY try it inside a QEMU emulator on the server (e.g. granger1). The problem with QEMU: you will need a system image with all the utilities, e.g. dumpe2fs, etc. Can be built with buildroot which requires some exploration. So consider this as an unbeaten path. I'll be happy to learn if you pull it off.</p>
+<p><strong>Choice of programming languages</strong></p>
+<p>You can use any programming language (C/C++, Python, Java...). </p>
+<p>C/C++ code can directly use the C header we provide to manipulate ext2 data structures; other programming languages will have to manipulate those bits per the C header. </p>
+<h2 id="deliverables">DELIVERABLES:</h2>
+<p>A single tarball (<code>.tar.gz</code>) containing:</p>
+<ul>
+<li>Your code, can be in any programming language (C/C++, Python, Java...). </li>
+<li>If your code requires compilation, include a Makefile to build and run the deliverable program. The higher level targets should be:</li>
+<li><strong>default</strong> ... compile your program (with the <strong><code>-Wall</code></strong> and <strong><code>-Wextra</code></strong> options) to produce an executable </li>
+<li><strong>clean</strong> ... delete all programs and output generated by the <code>Makefile</code>.</li>
+<li>If your code requires no compilation (e.g. written in Python), no Makefile is needed.</li>
+<li>The name of executable must be <code>fsdump</code>, regardless of your language choice. Btw, a Python script can be made as a standalone executable (Google it). </li>
+<li>A short <code>README</code> text file (<strong>NOT</strong> PDF) containing descriptions of each of the included files and any other information about your submission that you would like to bring to our attention (e.g., research, limitations, features, testing methodology).</li>
+<li>You do NOT need to submit any CSV file</li>
+</ul>
+<h2 id="project-description">PROJECT DESCRIPTION:</h2>
+<p>Historically, file systems were almost always been implemented as part of the operating system, running in kernel mode. Kernel code is expensive to develop, difficult to test, and prone to catastrophic failures. Within the past 15 years or so, new developments have made it possible to implement file systems in user mode, improving maintainability, and in some cases delivering even better performance than could be achieved with kernel code. All of this project will be done as user-mode software.</p>
+<p>To ensure data privacy and integrity, file system disks are generally protected from access by ordinary applications. Linux supports the creation, mounting, checking, and debugging of file systems stored in ordinary files. In this project, we will provide EXT2 file system images in ordinary files. Because they are in ordinary files (rather than protected disks) you can access/operate on those file system images with ordinary user mode code.</p>
+<!--- what is standard header file??--->
+
+<h3 id="part-1-exploring-an-ext2-image">PART 1: Exploring an EXT2 Image</h3>
+<p>Follow the steps in <a href="../lite/">here</a>. </p>
+<h3 id="part-2-summarizing-an-ext2-image">PART 2: Summarizing an EXT2 Image</h3>
+<p>In this step, you will write a program called <code>fsdump</code> that:</p>
+<ul>
+<li>Reads a file system image, whose name is specified as a command line argument. For example, we may run your program with the above file system image using the a command like:</li>
+</ul>
+<p><code>./fsdump EXT2_test.img</code></p>
+<ul>
+<li>
+<p>Analyzes the provided file system image and produces (to standard out) CSV summaries of what it finds. The contents of these CSV lines described below. Your program must output these files with exactly the same formats as shown below. We will use <em>sort(1)</em> and <em>diff(1)</em> to compare your csv output with ours, so the order of output lines does not matter, but a different format (even extra white space) will make your program fail the test.</p>
+</li>
+<li>
+<p>You need to parse filesystem data structures using your own code. You CANNOT rely on existing ext2 libraries or tools (such as <em>debugfs</em>) and parse their output. </p>
+</li>
+</ul>
+<p>Even if you cannot mount the provided image file and run <em>debugfs</em> on departmental servers, your program should be able to run on departmental servers, because it does not require <code>mount</code>. </p>
+<p>There are six types of output lines that your program should produce, each summarizing a different part of the file system. Remember, you can always check your program's output against <em>debugfs</em>'s output. All the information required for the summary can be manually found and checked by using debugfs. This is described <a href="https://fxlin.github.io/p4-fs/lite/#dump-inode-contents">here</a>. </p>
+<p>We have also provided to you (for testing purposes) a much smaller image (trivial.img) as well as a correct output summary (trivial.csv).</p>
+<h4 id="superblock-summary">superblock summary</h4>
+<p>A single new-line terminated line, comprised of eight comma-separated fields (with no white-space), summarizing the key file system parameters:</p>
+<ol>
+<li><code>SUPERBLOCK</code></li>
+<li>total number of blocks (decimal)</li>
+<li>total number of i-nodes (decimal)</li>
+<li>block size (in bytes, decimal)</li>
+<li>i-node size (in bytes, decimal)</li>
+<li>blocks per group (decimal)</li>
+<li>i-nodes per group (decimal)</li>
+<li>first non-reserved i-node (decimal)</li>
+</ol>
+<h4 id="group-summary">group summary</h4>
+<p>Scan each of the groups in the file system. For each group, produce a new-line terminated line for each group, each comprised of nine comma-separated fields (with no white space), summarizing its contents.</p>
+<ol>
+<li><code>GROUP</code></li>
+<li>group number (decimal, starting from zero)</li>
+<li>total number of blocks in this group (decimal)</li>
+<li>total number of i-nodes in this group (decimal)</li>
+<li>number of free blocks (decimal)</li>
+<li>number of free i-nodes (decimal)</li>
+<li>block number of free block bitmap for this group (decimal)</li>
+<li>block number of free i-node bitmap for this group (decimal)</li>
+<li>block number of first block of i-nodes in this group (decimal)</li>
+</ol>
+<!-----Note that most Berkeley-derived file systems (like EXT2) support both blocks and fragments, which may have different sizes. The block is the preferred unit of allocation. But in some cases, fragments may be used (to reduce internal fragmentation loss). Block addresses and the free block list entries are based on the fragment size, rather than the block size. But, in the images we give you, the block and fragment sizes will be the same.--->
+
+<!--One of the major features included EXT2 file systems is support for multiple cylinder groups:-->
+
+<!--all cylinder groups but the last have the same number of blocks and I-nodes; the last has the residue (e.g., blocks/fs modulo blocks/group).-->
+
+<!--each group, in addition to its group summary, also (for redundancy) starts with a copy of the file system superblock.-->
+<!--But, in the images we give you, there will be only a single group.-->
+
+<p><strong>NOTE</strong>: of a disk, <strong>block 0 is the boot block</strong>. Therefore, group 0 has 1 fewer block than any other groups. Example: group size is 64; group 0 spans block 1--63. You can verify this by <code>dumpe2fs</code>. Despite this, in your output for group 0, still output the actual group size, e.g. 64 in the above example. </p>
+<h4 id="free-block-entries">free block entries</h4>
+<p>Scan the free block bitmap for each group. For each free block, produce a new-line terminated line, with two comma-separated fields (with no white space).</p>
+<ol>
+<li><code>BFREE</code></li>
+<li>number of the free block (decimal)</li>
+</ol>
+<p>Take care to verify that you:</p>
+<ol>
+<li>understand whether 1 means "allocated" or "free".</li>
+<li>have correctly understood the block number to which the first bit corresponds.</li>
+<li>know how many blocks are in each group, and do not interpret more bits than there are blocks in the group.</li>
+</ol>
+<h4 id="free-i-node-entries">free I-node entries</h4>
+<p>Scan the free I-node bitmap for each group. For each free I-node, produce a new-line terminated line, with two comma-separated fields (with no white space).</p>
+<ol>
+<li><code>IFREE</code></li>
+<li>number of the free I-node (decimal)</li>
+</ol>
+<p>Take care to verify that you:</p>
+<ol>
+<li>understand whether 1 means "allocated" or "free".</li>
+<li>have correctly understood the I-node number to which the first bit corresponds.</li>
+<li>know how many I-nodes are in each group, and do not interpret more bits than there are I-nodes in the group.</li>
+</ol>
+<h4 id="i-node-summary">I-node summary</h4>
+<p>Scan the I-nodes for each group. For each allocated (non-zero mode and non-zero link count) I-node, produce a new-line terminated line, with up to 27 comma-separated fields (with no white space). The first twelve fields are i-node attributes:</p>
+<ol>
+<li><code>INODE</code></li>
+<li>inode number (decimal)</li>
+<li>file type ('f' for file, 'd' for directory, 's' for symbolic link, '?" for anything else)</li>
+<li>mode (low order 12-bits, octal ... suggested format "%o")</li>
+<li>owner (decimal)</li>
+<li>group (decimal)</li>
+<li>link count (decimal)</li>
+<li>time of last I-node change (mm/dd/yy hh:mm:ss, GMT)</li>
+<li>modification time (mm/dd/yy hh:mm:ss, GMT)</li>
+<li>time of last access (mm/dd/yy hh:mm:ss, GMT)</li>
+<li>file size (decimal)</li>
+<li>number of (512 byte) blocks of disk space (decimal) taken up by this file</li>
+</ol>
+<p>The <em>number of blocks</em> (field 12) should contain the same value as the <em>i_blocks</em> field of the I-node. There are a few interesting and non-obvious things about this number:</p>
+<ol>
+<li>This number is in units of 512 byte blocks, even if the file system block size is something else (e.g. 1024 or 4096 byte blocks).</li>
+<li>This number (times 512) may be smaller than the file size, as it includes only blocks that have actually been allocated to the file. A very large file might be <a href="https://en.wikipedia.org/wiki/Sparse_file">sparse</a>, in that some parts of the file may not have actually been written, and take up no disk space, but will read back as zeroes.</li>
+<li>This number (times 512) may be larger than the file size because it includes not only data blocks, but (single, double, and triple) indirect blocks that point to data blocks.</li>
+</ol>
+<p>For ordinary files (type 'f') and directories (type 'd') the next fifteen fields are block addresses (decimal, 12 direct, one indirect, one double indirect, one triple indirect). </p>
+<p><strong>Timestamp format</strong>. Related functions: gmtime() and strftime(), both in <code>&lt;time.h&gt;</code>.  If you notice there's an offset between yours and the sample dump: make sure you print time in GMT instead of local time such as GST. </p>
+<p><strong>Symbolic links</strong>. If the file length is less than the size of the block pointers (60 bytes) the file will contain zero data blocks, and the name (a text string) is stored in the space normally occupied by the block pointers (i.e. inline). </p>
+<p>For an inline symbolic link: </p>
+<ul>
+<li>
+<p>field 13: print the first four bytes of the name as unsigned int (decimal). </p>
+</li>
+<li>
+<p>no field 14 and beyond</p>
+</li>
+<li>
+<p>Example line from trivial.csv: <code>INODE,15,s,777,1028 ... 08/07/17 17:58:47,26,0,1886221359</code></p>
+</li>
+<li>
+<p>If you run into some bug, make sure you get the byte order right (big endian vs. little endian)</p>
+</li>
+</ul>
+<p>Otherwise, a symbolic link actually occupies data block(s): </p>
+<ul>
+<li>field 13 and beyond: only print the non-zero block addresses (unlike a normal file when you would print all 0s)</li>
+<li>Aside: for some reason, the num of blocks (field 12) can be == the actual number of blocks + 1 (e.g. there's one non-zero block, and field 12 == 2). This is also the behavior of trivial.csv and debugfs. Just follow it. </li>
+</ul>
+<p>While these rules may appear confusing, you will find examples in trivial.csv. Just make your output consistent with it!</p>
+<h4 id="directory-entries">directory entries</h4>
+<p>For each directory I-node, scan every data block. For each valid (non-zero I-node number) directory entry, produce a new-line terminated line, with seven comma-separated fields (no white space).</p>
+<ol>
+<li><code>DIRENT</code></li>
+<li>parent inode number (decimal) ... the I-node number of the directory that contains this entry</li>
+<li>logical byte offset (decimal) of this entry within the directory</li>
+<li>inode number of the referenced file (decimal)</li>
+<li>entry length (decimal)</li>
+<li>name length (decimal)</li>
+<li>name (string, surrounded by single-quotes). Don't worry about escaping, we promise there will be no single-quotes or commas in any of the file names.</li>
+</ol>
+<h4 id="indirect-block-references">indirect block references</h4>
+<p>The I-node summary contains a list of all 12 blocks, and the primary single, double, and triple indirect blocks. We also need to know about the blocks that are pointed to by those indirect blocks. For each I-node (file or directory), scan the single indirect blocks and (recursively) the double and triple indirect blocks. For each non-zero block pointer you find, produce a new-line terminated line with six comma-separated fields (no white space).</p>
+<ol>
+<li><code>INDIRECT</code></li>
+<li>I-node number of the owning file (decimal)</li>
+<li>(decimal) level of indirection for the block being scanned ... 1 for single indirect, 2 for double indirect, 3 for triple</li>
+<li>logical block offset (decimal) represented by the referenced block. If the referenced block is a data block, this is the logical block offset of that block within the file. If the referenced block is a single- or double-indirect block, this is the same as the logical offset of the first data block to which it refers.</li>
+<li>block number of the (1, 2, 3) indirect block being scanned (decimal) . . . not the highest level block (in the recursive scan), but the lower level block that contains the block reference reported by this entry.</li>
+<li>block number of the referenced block (decimal)</li>
+</ol>
+<p><strong>What is a logical block?</strong> Given a file, let us ignore the file's physical structure (where data is actually stored, indirect blocks, sparseness, etc) and view the data in the file as a (logical) stream of bytes. If the block size is 1K (1024 bytes):</p>
+<ul>
+<li>bytes 0-1023 would be in logical block 0 of the file </li>
+<li>bytes 1024-2047 would be in logical block 1 of the file </li>
+<li>bytes 2048-3071 would be in logical block 2 of the file </li>
+<li>...</li>
+</ul>
+<p>You can confirm your understanding of logical block numbers by looking at the <code>INDIRECT</code> entries in the sample output.</p>
+<p>If an I-node contains a triple indirect block:</p>
+<ul>
+<li>the triple indirect block number would be included in the INODE summary.</li>
+<li><code>INDIRECT</code> entries (with level 3) would be produced for each double indirect block pointed to by that triple indirect block.</li>
+<li><code>INDIRECT</code> entries (with level 2) would be produced for each indirect block pointed to by one of those double indirect blocks.</li>
+<li><code>INDIRECT</code> entries (with level 1) would be produced for each data block pointed to by one of those indirect blocks.</li>
+</ul>
+<h4 id="sample-output">Sample Output</h4>
+<p>We have provided a very simple test file system image (trivial.img) as well as a correct output summary (trivial.csv) that you can download and test with. Your program should be able to generate (modulo line ordering) the same output. </p>
+<h3 id="implementation-strategy">Implementation strategy</h3>
+<p>Read through the entire document; do simple feature first; test often; backup code regularly. Have fun!</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs"], "search": "../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+    
+  </body>
+</html>

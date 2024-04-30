@@ -1,0 +1,694 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../interpretation/">
+      
+      
+        <link rel="next" href="../lite/">
+      
+      <link rel="icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>exp2 - p4-fs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#file-system-consistency-analysis-exp2" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="p4-fs" class="md-header__button md-logo" aria-label="p4-fs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            p4-fs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              exp2
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../interpretation/" class="md-tabs__link">
+      exp1
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  <li class="md-tabs__item">
+    <a href="./" class="md-tabs__link md-tabs__link--active">
+      exp2
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../lite/" class="md-tabs__link">
+      cmd
+    </a>
+  </li>
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="p4-fs" class="md-nav__button md-logo" aria-label="p4-fs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    p4-fs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interpretation/" class="md-nav__link">
+        exp1
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          exp2
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        exp2
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    INTRODUCTION:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relation-to-reading-and-lectures" class="md-nav__link">
+    RELATION TO READING AND LECTURES:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-objectives" class="md-nav__link">
+    PROJECT OBJECTIVES:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deliverables" class="md-nav__link">
+    DELIVERABLES:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-description" class="md-nav__link">
+    PROJECT DESCRIPTION:
+  </a>
+  
+    <nav class="md-nav" aria-label="PROJECT DESCRIPTION:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#block-consistency-audits" class="md-nav__link">
+    Block Consistency Audits
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-node-allocation-audits" class="md-nav__link">
+    I-node Allocation Audits
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#directory-consistency-audits" class="md-nav__link">
+    Directory Consistency Audits
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#note" class="md-nav__link">
+    NOTE
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sample-damaged-file-system-summaries-and-output" class="md-nav__link">
+    SAMPLE DAMAGED FILE SYSTEM SUMMARIES AND OUTPUT
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-of-exit-codes" class="md-nav__link">
+    SUMMARY OF EXIT CODES:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#submission" class="md-nav__link">
+    SUBMISSION:
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lite/" class="md-nav__link">
+        cmd
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    INTRODUCTION:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relation-to-reading-and-lectures" class="md-nav__link">
+    RELATION TO READING AND LECTURES:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-objectives" class="md-nav__link">
+    PROJECT OBJECTIVES:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deliverables" class="md-nav__link">
+    DELIVERABLES:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-description" class="md-nav__link">
+    PROJECT DESCRIPTION:
+  </a>
+  
+    <nav class="md-nav" aria-label="PROJECT DESCRIPTION:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#block-consistency-audits" class="md-nav__link">
+    Block Consistency Audits
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-node-allocation-audits" class="md-nav__link">
+    I-node Allocation Audits
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#directory-consistency-audits" class="md-nav__link">
+    Directory Consistency Audits
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#note" class="md-nav__link">
+    NOTE
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sample-damaged-file-system-summaries-and-output" class="md-nav__link">
+    SAMPLE DAMAGED FILE SYSTEM SUMMARIES AND OUTPUT
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-of-exit-codes" class="md-nav__link">
+    SUMMARY OF EXIT CODES:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#submission" class="md-nav__link">
+    SUBMISSION:
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="file-system-consistency-analysis-exp2">File System Consistency Analysis (exp2)</h1>
+<h2 id="introduction">INTRODUCTION:</h2>
+<p>A file system is an example of a large aggregation of complex and highly inter-related data structures. Such systems are often at risk for corruption, most commonly resulting from incomplete execution of what should have been all-or-none updates. Unless we can so cleverly design our data structures and algorithms as to render such errors impossible, it is usually necessary to articulate consistency assertions and develop a utility to audit those systems for consistency, and (where possible) repair any detected anomalies. </p>
+<p>In exp1 of this project we wrote a program to examine on-disk data structures and summarize their contents. In this second part, we will analyze those summaries to detect errors and inconsistencies.</p>
+<p>All previous projects have been implemented in C, which exposes the underlying system calls and is well suited for low level operations on well-defined data structures. This project involves trivial text processing (to read .csv input) and the assembly and processing of an internal state model. While this can certainly be done in C, you may find it easier to do in a higher level language (e.g., Python). You are free implement this project in any language that is supported on the departmental servers (where we will do the testing).</p>
+<h2 id="relation-to-reading-and-lectures">RELATION TO READING AND LECTURES:</h2>
+<p>This project more deeply explores the filesystem structures. <!--- described in Arpaci chapter 39. --->
+The images we will be working with are EXT2 file systems. <!----  as described in sections 40.2-40.5.  ---></p>
+<!---- This project goes much deeper than the introductory integrity discussion in sections 42.1-2. ---->
+
+<h2 id="project-objectives">PROJECT OBJECTIVES:</h2>
+<ul>
+<li>Primary: reinforce the basic file system concepts of directory objects, file objects, and free space.</li>
+<li>Primary: reinforce the implementation descriptions provided in the text and lectures.</li>
+<li>Primary: gain experience examining, interpreting and processing information in complex binary data structures.</li>
+<li>Primary: reinforce the notions of consistency and integrity and apply them to a concrete and non-trivial problem.</li>
+</ul>
+<h2 id="deliverables">DELIVERABLES:</h2>
+<p>A single tarball (<code>.tar.gz</code>) containing:</p>
+<ul>
+<li>(at least) one source module that builds/executes cleanly with no errors or warnings.</li>
+<li>A Makefile to build and run the deliverable program. The higher level targets should be:</li>
+<li>default ... build your program to produce an executable named <code>checker</code></li>
+<li><strong>dist</strong> ... create the deliverable tarball</li>
+<li><strong>clean</strong> ... delete all programs and output generated by the <code>Makefile</code>, and return the directory to its freshly un-tar-ed state.</li>
+<li>a <code>README</code> text file containing descriptions of each of the included files and any other information about your submission that you would like to bring to our attention (e.g., research, limitations, features, testing methodology).</li>
+</ul>
+<!--- NOTE: do not create or edit your `README` file on a Windows system, as the gratuitious carriage-returns may cause processing errors in the auto-grading scripts. --->
+
+<h2 id="project-description">PROJECT DESCRIPTION:</h2>
+<p>Write a program to analyze a file system summary (a <code>.csv</code> file in the same format produced for the previous file system project) and report on all discovered inconsistencies. Detected inconsistencies should be reported to standard out. Execution errors (e.g., invalid arguments or unable to open required files) should be reported to standard error.</p>
+<p>Your executable should be called <code>checker</code> and accept a single, required, command line argument, the name of the file to be analyzed. If your language does not require pre-compilation (e.g., Python) create a default rule in your <code>Makefile</code> that merely creates a <code>checker</code> link, or prints a success message. If your language does not allow a program to have such a name, include a shell script (named <code>checker</code>) that will run your program.</p>
+<!--- the following may be needed later --->
+
+<p>The results grading for this project will be entirely automated, and messages produced in an incorrect format may result in no points. We are providing a <a href="http://web.cs.ucla.edu/classes/spring18/cs111/projects/P3B_check.sh">sanity check script</a> that will do a simple validation of your package, and confirm correct output for a two-digit number of basic errors. For a simple clean summary, you can use the correct output sample (trivial.csv) we provided for the previous project. If you want a set of corrupted summaries to test with, you can pull down copies of the summaries (with names like <code>P3B-test_1.csv</code>) and <a href="">corresponding</a> correct output (with names like <code>P3B-test_1.err</code>) used by the sanity check script.</p>
+<p>Part of your score will be based on your ability to correctly recognize and report on the problems in the supplied file system summaries, but your program will also be tested on several other file systems with a wider range of anomalies. You can lose points for mis-reporting errors, failing to report errors, or for reporting errors that are not present.</p>
+<p>This is a summary of the errors your program should check for, and a sample error message for each:</p>
+<h3 id="block-consistency-audits">Block Consistency Audits</h3>
+<p>Every block pointer in an I-node or indirect block should be valid (a legal data block, within the file system) or zero. Examine every single block pointer in every single I-node, direct block, indirect block, double-indirect block, and triple indirect block to ascertain that this is true. Look at all block pointers in the I-node, not merely those within the indicated file size. If any block pointer is not valid (a legal data block within the file system), an error message like one of the following (depending on precisely the nature of the incorrect pointer that is found) should be generated to stdout:</p>
+<pre><code>    INVALID BLOCK 101 IN INODE 13 AT OFFSET 0
+    INVALID INDIRECT BLOCK 101 IN INODE 13 AT OFFSET 12
+    INVALID DOUBLE INDIRECT BLOCK 101 IN INODE 13 AT OFFSET 268
+    INVALID TRIPLE INDIRECT BLOCK 101 IN INODE 13 AT OFFSET 65804
+    RESERVED INDIRECT BLOCK 3 IN INODE 13 AT OFFSET 12
+    RESERVED DOUBLE INDIRECT BLOCK 3 IN INODE 13 AT OFFSET 268
+    RESERVED TRIPLE INDIRECT BLOCK 3 IN INODE 13 AT OFFSET 65804
+    RESERVED BLOCK 3 IN INODE 13 AT OFFSET 0
+</code></pre>
+<p>An <code>INVALID</code> block is one whose number is less than zero or greater than the highest block in the file system.
+A <code>RESERVED</code> block is one that could not legally be allocated to any file because it should be reserved for file system metadata (e.g., superblock, cylinder group summary, free block list, ...).
+The logical <code>OFFSET</code> values are as described for the previous project.</p>
+<p>Note that the reported offsets should be block numbers (byte offsets divided by 1024). The offset associated with an indirect blocks should be that associated with the first data block it points to (as in the previous project).</p>
+<p>Every legal data block (every block between the end of the I-nodes and the start of the next group) should appear on on the free block list, or be allocated to exactly one file. Examine the free list to determine whether or not this is the case. If a block is not referenced by any file and is not on the free list, a message like the following should be generated to stdout:</p>
+<pre><code>    UNREFERENCED BLOCK 37
+</code></pre>
+<p>A block that is allocated to some file might also appear on the free list. In this case a message like the following should be generated to stdout:</p>
+<pre><code>    ALLOCATED BLOCK 8 ON FREELIST
+</code></pre>
+<p>If a legal block is referenced by multiple files (or even multiple times in a single file), messages like the following (depending on precisely where the references are) should be generated to stdout for each reference to that block:</p>
+<pre><code>    DUPLICATE BLOCK 8 IN INODE 13 AT OFFSET 0
+    DUPLICATE INDIRECT BLOCK 8 IN INODE 13 AT OFFSET 12
+    DUPLICATE DOUBLE INDIRECT BLOCK 8 IN INODE 13 AT OFFSET 268
+    DUPLICATE TRIPLE INDIRECT BLOCK 8 IN INODE 13 AT OFFSET 65804
+</code></pre>
+<p>Note that you will not know that a block is multiply referenced until you find the second reference. You will have to figure out a way to go back and report ALL of the references. We must report all of the references, because each of them is likely to have been corrupted.</p>
+<h3 id="i-node-allocation-audits">I-node Allocation Audits</h3>
+<p>We can tell whether or not an I-node is allocated by looking at its type and presence in the CSV file. An allocated I-node will have some valid type (e.g., file or directory). Unallocated I-nodes (whose type should be zero) should not appear in INODE summaries, but should be in the free list. Scan through all of the I-nodes to determine which are valid/allocated. Every unallocated I-Node should be on a free I-node list. Compare your list of allocated/unallocated I-nodes with the free I-node bitmaps, and for each discovered inconsistency, a message like one of the following should be generated to stdout:</p>
+<pre><code>    ALLOCATED INODE 2 ON FREELIST
+    UNALLOCATED INODE 17 NOT ON FREELIST
+</code></pre>
+<h3 id="directory-consistency-audits">Directory Consistency Audits</h3>
+<p>Every allocated I-node should be referred to by the a number of directory entries that is equal to the reference count recorded in the I-node. Scan all of the directories to enumerate all links.</p>
+<p>For any allocated I-node whose reference count does not match the number of discovered links, an error message like the following should be generated to stdout:</p>
+<pre><code>    INODE 2 HAS 4 LINKS BUT LINKCOUNT IS 5
+</code></pre>
+<p>This message should also be used to report unreferenced I-nodes:</p>
+<pre><code>    INODE 17 HAS 0 LINKS BUT LINKCOUNT IS 1
+</code></pre>
+<p>Directory entries should only refer to valid and allocated I-nodes. An <code>INVALID</code> I-node is one whose number is less than 1 or greater than the last I-node in the system. While scanning the directory entries, check the validity and allocation status of each referenced I-node. For any reference to an invalid or unallocated I-node, an error message like the following should be generated to stdout:</p>
+<pre><code>    DIRECTORY INODE 2 NAME 'nullEntry' UNALLOCATED INODE 17
+    DIRECTORY INODE 2 NAME 'bogusEntry' INVALID INODE 26
+</code></pre>
+<p>We also know that every directory should begin with two links, one to itself (<strong>.</strong>) and one to its parent (<strong>..</strong>). While scanning each directory, check for the correctness of these two links and, for each detected inconsistency, a message like one of the following should be generated to stdout:</p>
+<pre><code>    DIRECTORY INODE 2 NAME '..' LINK TO INODE 11 SHOULD BE 2
+    DIRECTORY INODE 11 NAME '.' LINK TO INODE 2 SHOULD BE 11
+</code></pre>
+<h3 id="note">NOTE</h3>
+<p>As in the previous project, the file system summaries we use to test your submission will describe file systems with only a single group.</p>
+<h2 id="sample-damaged-file-system-summaries-and-output">SAMPLE DAMAGED FILE SYSTEM SUMMARIES AND OUTPUT</h2>
+<p>The <a href="http://web.cs.ucla.edu/classes/spring18/cs111/projects/P3B_check.sh">sanity check script</a> will automatically download a large number of damaged file system summaries. Run your program against them, and compare your output with (what I believe to be) the correct error reports. Note that the sanity check runs are timed. If your program is implemented inefficiently (e.g. too many scans, using too much memory) it may run so slowly as to time out and fail. If this happens to you, examine your approach and look for a more efficient way to obtain the required information.</p>
+<p>As with the previous project, your output will be sorted before it is compared with the golden results, so the order in which you output errors is unimportant.</p>
+<h2 id="summary-of-exit-codes">SUMMARY OF EXIT CODES:</h2>
+<ul>
+<li>0 ... successful execution, no inconsistencies found.</li>
+<li>1 ... unsuccessful execution, bad parameters or system call failure.</li>
+<li>2 ... successful execution, inconsistencies found.</li>
+</ul>
+<h2 id="submission">SUBMISSION:</h2>
+<p>Your <strong>README</strong> file must include lines of the form:</p>
+<p><strong>NAME:</strong> <em>your (comma separted) name(s)</em> <strong>EMAIL:</strong> <em>your (comma separted) email address(es)</em> <strong>ID:</strong> <em>your (comma separted) student ID(s)</em></p>
+<p>And, if slip days are allowed on this project, and you want to use some, this too must be included in the <strong>README</strong> file:</p>
+<p><strong>SLIPDAYS:</strong> <em>#days</em></p>
+<p>If, for instance, you wanted to use two slip-days, you would add the following line:</p>
+<p><strong>SLIPDAYS: 2</strong></p>
+<p>Your name, student ID, and email address should also appear as comments at the top of your <code>Makefile</code> and each source file. If this is a team submission, the names, e-mail addresses, and student IDs should be comma-separated.</p>
+<p>Your tarball should have a name of the form <code>lab3b-</code><em>studentID</em><code>.tar.gz</code>. If this is a team submission, only one student ID need appear in the tarball's name.
+You can sanity check your submission with this <a href="http://web.cs.ucla.edu/classes/spring18/cs111/projects/P3B_check.sh">test script</a>.
+Projects that do not pass the test script are likely to receive very poor scores!</p>
+<p>We will test it on a departmental Linux server. You would be well advised to test your submission on that platform before submitting it.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs"], "search": "../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+    
+  </body>
+</html>
